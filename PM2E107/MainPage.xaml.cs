@@ -1,5 +1,6 @@
 ﻿using PM2E107.Controllers;
 using PM2E107.Models;
+using PM2E107.Views;
 
 namespace PM2E107 {
     public partial class MainPage : ContentPage {
@@ -114,7 +115,8 @@ namespace PM2E107 {
         }
 
         private async void OnBtnListaSitiosClicked(object sender, EventArgs e) {
-            await DisplayAlert("Atencion", "mensaje", "Aceptar");
+            await Navigation.PushAsync(new Listado());
+            //await DisplayAlert("Atencion", "mensaje", "Aceptar");
         }
 
 
