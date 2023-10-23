@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PM2E107.MainPage">
+
+    <StackLayout Padding="20" Spacing="5" VerticalOptions="StartAndExpand">
+
+        <ImageButton x:Name="imgFoto"
+            Clicked="TakeAPhoto"
+            Aspect="AspectFill"
+            CornerRadius="5"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="StartAndExpand"
+            HeightRequest="250"
+            BackgroundColor="White"
+            />
+
+
+        <Frame CornerRadius="10" Padding="5">
+            <StackLayout>
+                <Label x:Name="lblLatitud" />
+                <Label x:Name="lblLongitud" />
+            </StackLayout>
+        </Frame>
+
+
+
+        <Frame CornerRadius="10" Padding="5" HeightRequest="150">
+            <StackLayout>
+                <Label Text="Descripcion" />
+                <Editor x:Name="txtDescripcion" VerticalOptions="FillAndExpand" />
+            </StackLayout>            
+        </Frame>
+
+
+        <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Spacing="5">
+            <Button x:Name="btnAgregar"
+                    Text="Agregar"
+                    Clicked="OnBtnAgregarClicked"/>
+
+            <Button x:Name="btnListaSitios"
+                    Text="Lista sitios"
+                    Clicked="OnBtnListaSitiosClicked"/>
+        </StackLayout>
+        
+        
+    </StackLayout>
+</ContentPage>
