@@ -16,7 +16,7 @@
 
         <CollectionView.ItemTemplate>
             <DataTemplate>
-                
+
                 <SwipeView>
                     <SwipeView.LeftItems>
                         <SwipeItems>
@@ -26,7 +26,7 @@
 
                             <SwipeItem Text="Ver Mapa"
                                        IconImageSource="map_ico.png"
-                                       BackgroundColor="Aquamarine" />
+                                       BackgroundColor="Aquamarine"/>
                         </SwipeItems>
                     </SwipeView.LeftItems>
 

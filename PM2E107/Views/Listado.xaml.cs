@@ -1,4 +1,5 @@
 using PM2E107.Controllers;
+using System.Windows.Input;
 
 namespace PM2E107.Views;
 
@@ -22,4 +23,6 @@ public partial class Listado : ContentPage
 
 		viewListado.ItemsSource = await db.SelectAll();
     }
+
+
 }
