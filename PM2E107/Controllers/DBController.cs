@@ -25,11 +25,20 @@ namespace PM2E107.Controllers {
 
 
 
-        public DBController() {
-            connection = new SQLiteAsyncConnection(dbPath, flags);
-            connection.CreateTableAsync<Sitio>().Wait();
+
+
+        public DBController() {          
         }
 
+
+
+        private async Task Init() {
+            if (connection is not null) {
+                return;
+            }               
+            connection = new SQLiteAsyncConnection(dbPath, flags);
+            var result = await connection.CreateTableAsync<Sitio>();
+        }
 
 
 
@@ -42,11 +51,13 @@ namespace PM2E107.Controllers {
 
 
         public async Task<List<Sitio>> SelectAll() {
+            await Init();
             return await connection.Table<Sitio>().ToListAsync();
         }
 
 
         public async Task<Sitio> SelectById(int id) {
+            await Init();
             return await connection.Table<Sitio>().Where(col => col.Id == id).FirstOrDefaultAsync();
         }
 
@@ -54,6 +65,7 @@ namespace PM2E107.Controllers {
 
 
         public async Task<int> Insert(Sitio sitio) {
+            await Init();
             return await connection.InsertAsync(sitio);
         }
 
@@ -62,6 +74,7 @@ namespace PM2E107.Controllers {
 
 
         public async Task<int> Update(Sitio sitio) {
+            await Init();
             return await connection.UpdateAsync(sitio);
         }
 
@@ -70,6 +83,7 @@ namespace PM2E107.Controllers {
 
 
         public async Task<int> Delete(Sitio sitio) {
+            await Init();
             return await connection.DeleteAsync(sitio);
         }
 

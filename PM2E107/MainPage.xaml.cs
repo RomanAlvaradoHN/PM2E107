@@ -4,7 +4,7 @@ using PM2E107.Models;
 namespace PM2E107 {
     public partial class MainPage : ContentPage {
         private byte[] fotoArray;
-        //private readonly DBController db;
+        private readonly DBController db;
         private CancellationTokenSource _cancelTokenSource;
         private bool _isCheckingLocation;
 
@@ -15,7 +15,7 @@ namespace PM2E107 {
 
         public MainPage() {
             InitializeComponent();
-            //db = new DBController();
+            db = new DBController();
         }
 
         
@@ -57,7 +57,7 @@ namespace PM2E107 {
             try {
                 _isCheckingLocation = true;
 
-                GeolocationRequest request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
+                GeolocationRequest request = new GeolocationRequest(GeolocationAccuracy.Low, TimeSpan.FromSeconds(5));
 
                 _cancelTokenSource = new CancellationTokenSource();
 
@@ -96,17 +96,13 @@ namespace PM2E107 {
         private async void OnBtnAgregarClicked(object sender, EventArgs e) {
             Sitio sitio = new Sitio(
                 fotoArray,
-                lblLongitud.Text,
                 lblLatitud.Text,
-                txtDescripcion.Text
+                lblLongitud.Text,
+                txtDescripcion.Text                
             );
 
-
-
-            if (!sitio.GetDatosInvalidos().Any()) {
-               
-                //await db.Insert(sitio);
-                //await Navigation.PushAsync(new PageResults());
+            if(!sitio.GetDatosInvalidos().Any()) {
+                await db.Insert(sitio);
                 LimpiarCampos();
 
             } else {
@@ -114,6 +110,7 @@ namespace PM2E107 {
                 await DisplayAlert("Datos Invalidos:", msj, "acepar");
             }
 
+            //await DisplayAlert("Atencion", "mensaje", "Aceptar");
         }
 
         private async void OnBtnListaSitiosClicked(object sender, EventArgs e) {

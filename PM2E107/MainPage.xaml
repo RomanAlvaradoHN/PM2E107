@@ -11,16 +11,28 @@
             CornerRadius="5"
             HorizontalOptions="FillAndExpand"
             VerticalOptions="StartAndExpand"
-            HeightRequest="250"
+            HeightRequest="200"
             BackgroundColor="White"
             />
 
 
-        <Frame CornerRadius="10" Padding="5">
-            <StackLayout>
-                <Label x:Name="lblLatitud" />
-                <Label x:Name="lblLongitud" />
-            </StackLayout>
+        <Frame CornerRadius="10" Padding="5" HeightRequest="100">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Label Text="Longitud: " Grid.Row="0" Grid.Column="0" VerticalOptions="Center"/>
+                <Label x:Name="lblLongitud" Grid.Row="0" Grid.Column="1" VerticalOptions="Center" HorizontalTextAlignment="Center"/>
+
+                <Label Text="Latitud: " Grid.Row="1" Grid.Column="0" VerticalOptions="Center"/>
+                <Label x:Name="lblLatitud" Grid.Row="1" Grid.Column="1" VerticalOptions="Center" HorizontalTextAlignment="Center"/>
+            </Grid>
         </Frame>
 
 
