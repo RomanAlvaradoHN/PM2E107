@@ -37,7 +37,7 @@ namespace PM2E107.Controllers {
                 return;
             }               
             connection = new SQLiteAsyncConnection(dbPath, flags);
-            var result = await connection.CreateTableAsync<Sitio>();
+            await connection.CreateTableAsync<Sitio>();
         }
 
 

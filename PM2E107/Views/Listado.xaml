@@ -2,13 +2,11 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PM2E107.Views.Listado"
+             x:Name="estaPagina"
              Title="Listado de Sitios">
-    
-    
-    
-    
-    
-    
+
+
+
     <CollectionView x:Name="viewListado" SelectionMode="Single" BackgroundColor="White">
         <CollectionView.ItemsLayout>
             <LinearItemsLayout Orientation="Vertical" ItemSpacing="1"/>
@@ -18,20 +16,22 @@
             <DataTemplate>
 
                 <SwipeView>
+                    
                     <SwipeView.LeftItems>
                         <SwipeItems>
-                            <SwipeItem Text="Eliminar"
-                                       IconImageSource="delete_ico.png"
-                                       BackgroundColor="Red" />
+                            <SwipeItem IconImageSource="delete_ico.png"
+                                       BackgroundColor="Red"
+                                       Command="{Binding Source={x:Reference estaPagina}, Path=SwEliminar}"
+                                       CommandParameter="{Binding Id}"/>
 
-                            <SwipeItem Text="Ver Mapa"
-                                       IconImageSource="map_ico.png"
-                                       BackgroundColor="Aquamarine"/>
+                            <SwipeItem IconImageSource="map_ico.png"
+                                       BackgroundColor="LightGreen"
+                                       Command="{Binding SwEliminar}"/>
                         </SwipeItems>
                     </SwipeView.LeftItems>
 
 
-                    <Grid Padding="10">
+                    <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
@@ -41,7 +41,10 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Image BackgroundColor="White" Grid.Column="0" VerticalOptions="Center"/>
+                        <Image BackgroundColor="White" Grid.Column="0" VerticalOptions="Center"
+                               HeightRequest="80"
+                               WidthRequest="100"/>
+                        
                         <Label Text="{Binding Descripcion}" Grid.Column="1" VerticalOptions="Center"/>
                     </Grid>
                     

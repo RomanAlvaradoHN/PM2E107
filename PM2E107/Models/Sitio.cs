@@ -1,16 +1,20 @@
-﻿using SQLite;
+﻿using PM2E107.Controllers;
+using PM2E107.Views;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+
 
 namespace PM2E107.Models {
     public class Sitio {
         private List<string> invalidData = new List<string>();
         private byte[] foto;
-        private string latitud;
-        private string longitud;
+        private double latitud;
+        private double longitud;
         private string descripcion;
 
 
@@ -20,7 +24,7 @@ namespace PM2E107.Models {
         }
 
 
-        public Sitio(byte[] foto, string latitud, string longitud, string descripcion) {
+        public Sitio(byte[] foto, double longitud, double latitud, string descripcion) {
             this.Foto = foto;
             this.Longitud = longitud;
             this.Latitud = latitud;
@@ -59,12 +63,26 @@ namespace PM2E107.Models {
 
 
 
+        [Column("Longitud")]
+        public double Longitud {
+            get { return this.longitud; }
+
+            set {
+                if (value != 0.0) {
+                    this.longitud = value;
+                } else {
+                    this.invalidData.Add("Longitud");
+                }
+            }
+        }
+
+
         [Column("Latitud")]
-        public string Latitud {
+        public double Latitud {
             get { return this.latitud; }
 
             set {
-                if (!string.IsNullOrEmpty(value)) {
+                if (value != 0.0) {
                     this.latitud = value;
                 } else {
                     this.invalidData.Add("Latitud");
@@ -73,19 +91,6 @@ namespace PM2E107.Models {
         }
 
 
-
-        [Column("Longitud")]
-        public string Longitud {
-            get { return this.longitud; }
-
-            set {
-                if (!string.IsNullOrEmpty(value)) {
-                    this.longitud = value;
-                } else {
-                    this.invalidData.Add("Longitud");
-                }
-            }
-        }
 
 
 
@@ -101,6 +106,7 @@ namespace PM2E107.Models {
                 }
             }
         }
+
 
     }
 }

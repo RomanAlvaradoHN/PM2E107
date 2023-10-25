@@ -5,7 +5,7 @@ using PM2E107.Views;
 namespace PM2E107 {
     public partial class MainPage : ContentPage {
         private byte[] fotoArray;
-        private readonly DBController db;
+        private Location location = new Location();
         private CancellationTokenSource _cancelTokenSource;
         private bool _isCheckingLocation;
 
@@ -16,7 +16,6 @@ namespace PM2E107 {
 
         public MainPage() {
             InitializeComponent();
-            db = new DBController();
         }
 
         
@@ -57,13 +56,10 @@ namespace PM2E107 {
         private async Task ObtenerCoordenadas() {
             try {
                 _isCheckingLocation = true;
-
                 GeolocationRequest request = new GeolocationRequest(GeolocationAccuracy.Low, TimeSpan.FromSeconds(5));
-
                 _cancelTokenSource = new CancellationTokenSource();
-
-                Location location = await Geolocation.Default.GetLocationAsync(request, _cancelTokenSource.Token);
-
+                
+                location = await Geolocation.Default.GetLocationAsync(request, _cancelTokenSource.Token);
                 if (location != null) {
                     //Console.WriteLine($"Latitude: {location.Latitude}, Longitude: {location.Longitude}, Altitude: {location.Altitude}");
                     lblLongitud.Text = $"{location.Longitude}";
@@ -71,8 +67,6 @@ namespace PM2E107 {
                 } 
 
             }
-
-
             // Catch one of the following exceptions:
             //   FeatureNotSupportedException
             //   FeatureNotEnabledException
@@ -83,9 +77,7 @@ namespace PM2E107 {
             } finally {
                 _isCheckingLocation = false;
             }
-            
         }
-
         public void CancelRequest() {
             if (_isCheckingLocation && _cancelTokenSource != null && _cancelTokenSource.IsCancellationRequested == false) {
                 _cancelTokenSource.Cancel();
@@ -94,25 +86,49 @@ namespace PM2E107 {
 
 
 
+
+
+
+
+
+
         private async void OnBtnAgregarClicked(object sender, EventArgs e) {
-            Sitio sitio = new Sitio(
-                fotoArray,
-                lblLatitud.Text,
-                lblLongitud.Text,
-                txtDescripcion.Text                
-            );
+            try {
+                Sitio sitio = new Sitio(
+                    fotoArray,
+                    location.Longitude,
+                    location.Latitude,
+                    txtDescripcion.Text
+                );
 
-            if(!sitio.GetDatosInvalidos().Any()) {
-                await db.Insert(sitio);
-                LimpiarCampos();
+                if (!sitio.GetDatosInvalidos().Any()) {
+                    await App.db.Insert(sitio);
+                    LimpiarCampos();
 
-            } else {
-                string msj = string.Join("\n", sitio.GetDatosInvalidos());
-                await DisplayAlert("Datos Invalidos:", msj, "acepar");
+                } else {
+                    string msj = string.Join("\n", sitio.GetDatosInvalidos());
+                    await DisplayAlert("Datos Invalidos:", msj,  "acepar");
+                }
+
+            }catch(Exception ex) {
+                await DisplayAlert("Alerta de Falla!", ex.Message, "Entendido");
             }
+            
 
             //await DisplayAlert("Atencion", "mensaje", "Aceptar");
         }
+
+
+
+
+
+
+
+
+
+
+
+
 
         private async void OnBtnListaSitiosClicked(object sender, EventArgs e) {
             await Navigation.PushAsync(new Listado());
