@@ -3,6 +3,7 @@ using PM2E107.Views;
 using SQLite;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,10 +25,9 @@ namespace PM2E107.Models {
         }
 
 
-        public Sitio(byte[] foto, double longitud, double latitud, string descripcion) {
+        public Sitio(byte[] foto, Location locacion, string descripcion) {
             this.Foto = foto;
-            this.Longitud = longitud;
-            this.Latitud = latitud;
+            this.Locacion = locacion;
             this.Descripcion = descripcion;
         }
 
@@ -61,6 +61,23 @@ namespace PM2E107.Models {
         }
 
 
+
+
+        [Ignore]
+        public Location Locacion {
+            get { 
+                return new Location(Latitud, Longitud);
+            }
+
+            set {
+                if (value.Longitude != 0.0 && value.Latitude != 0.0) {
+                    this.Latitud = value.Latitude;
+                    this.Longitud = value.Longitude;
+                } else {
+                    this.invalidData.Add("Locacion");
+                }
+            }
+        }
 
 
         [Column("Longitud")]

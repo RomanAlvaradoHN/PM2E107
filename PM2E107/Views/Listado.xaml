@@ -3,9 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PM2E107.Views.Listado"
              x:Name="estaPagina"
+             xmlns:controladores="clr-namespace:PM2E107.Controllers"
              Title="Listado de Sitios">
 
-
+    <ContentPage.Resources>
+        <controladores:MyUtilities x:Key="toStreamImageSource"/>
+    </ContentPage.Resources>
 
     <CollectionView x:Name="viewListado" SelectionMode="Single" BackgroundColor="White">
         <CollectionView.ItemsLayout>
@@ -26,7 +29,8 @@
 
                             <SwipeItem IconImageSource="map_ico.png"
                                        BackgroundColor="LightGreen"
-                                       Command="{Binding SwEliminar}"/>
+                                       Command="{Binding Source={x:Reference estaPagina}, Path=SwMapa}"
+                                       CommandParameter="{Binding Id}"/>
                         </SwipeItems>
                     </SwipeView.LeftItems>
 
@@ -43,7 +47,8 @@
 
                         <Image BackgroundColor="White" Grid.Column="0" VerticalOptions="Center"
                                HeightRequest="80"
-                               WidthRequest="100"/>
+                               WidthRequest="100"
+                               Source="{Binding Foto, Converter={StaticResource toStreamImageSource}}"/>
                         
                         <Label Text="{Binding Descripcion}" Grid.Column="1" VerticalOptions="Center"/>
                     </Grid>

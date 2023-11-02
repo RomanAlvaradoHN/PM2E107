@@ -1,6 +1,7 @@
 ﻿using PM2E107.Controllers;
 using PM2E107.Models;
 using PM2E107.Views;
+using System.Diagnostics;
 
 namespace PM2E107 {
     public partial class MainPage : ContentPage {
@@ -96,8 +97,7 @@ namespace PM2E107 {
             try {
                 Sitio sitio = new Sitio(
                     fotoArray,
-                    location.Longitude,
-                    location.Latitude,
+                    location,
                     txtDescripcion.Text
                 );
 

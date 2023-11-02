@@ -1,5 +1,8 @@
+using Microsoft.Maui.Maps;
 using PM2E107.Controllers;
+using PM2E107.Models;
 using SQLite;
+using System.Diagnostics;
 using System.Windows.Input;
 
 namespace PM2E107.Views;
@@ -30,6 +33,7 @@ public partial class Listado : ContentPage
             await App.db.Delete(await App.db.SelectById(id));
             await DisplayAlert("Atencion", "Registro eliminado con exito", "Aceptar");
             viewListado.ItemsSource = await App.db.SelectAll();
+
         } catch(Exception ex) {
             await DisplayAlert("Error", ex.Message, "Aceptar");
         }
@@ -38,8 +42,15 @@ public partial class Listado : ContentPage
 
 
 
-    public ICommand SwMapa => new Command(async () => {
-        await Navigation.PushAsync(new Mapa());
+    public ICommand SwMapa => new Command<int>(async (id) => {
+        try {
+            Sitio sitio = await App.db.SelectById(id);
+            await Navigation.PushAsync(new Mapa(sitio.Locacion));
+
+        } catch(Exception ex) {
+            await DisplayAlert("Error", ex.Message, "Aceptar");
+        }
+        
     });
 
     //Colocar en el SwipeItem la propiedad:  Invoked="SwipeItem_Eliminar"
