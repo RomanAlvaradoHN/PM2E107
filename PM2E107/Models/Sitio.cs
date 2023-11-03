@@ -81,7 +81,7 @@ namespace PM2E107.Models {
 
 
         [Column("Longitud")]
-        public double Longitud {
+        private double Longitud {
             get { return this.longitud; }
 
             set {
@@ -95,7 +95,7 @@ namespace PM2E107.Models {
 
 
         [Column("Latitud")]
-        public double Latitud {
+        private double Latitud {
             get { return this.latitud; }
 
             set {
