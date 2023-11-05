@@ -5,7 +5,15 @@
              xmlns:mapas="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
              Title="Mapa de Sitio">
 
-    <mapas:Map x:Name="mapaSitio"/>
+    <StackLayout>
+        <mapas:Map x:Name="mapaSitio"/>
+
+        <Button x:Name="btnCompartir"
+        Text="Compartir Sitio"
+        Clicked="OnBtnCompartirClicked"/>
+
+    </StackLayout>
+    
 
 
 </ContentPage>

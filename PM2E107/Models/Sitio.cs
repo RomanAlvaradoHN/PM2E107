@@ -66,7 +66,7 @@ namespace PM2E107.Models {
         [Ignore]
         public Location Locacion {
             get { 
-                return new Location(Latitud, Longitud);
+                return new Location(this.Latitud, this.Longitud);
             }
 
             set {
@@ -81,7 +81,7 @@ namespace PM2E107.Models {
 
 
         [Column("Longitud")]
-        private double Longitud {
+        public double Longitud {
             get { return this.longitud; }
 
             set {
@@ -95,7 +95,7 @@ namespace PM2E107.Models {
 
 
         [Column("Latitud")]
-        private double Latitud {
+        public double Latitud {
             get { return this.latitud; }
 
             set {

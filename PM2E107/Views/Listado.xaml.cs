@@ -44,8 +44,7 @@ public partial class Listado : ContentPage
 
     public ICommand SwMapa => new Command<int>(async (id) => {
         try {
-            Sitio sitio = await App.db.SelectById(id);
-            await Navigation.PushAsync(new Mapa(sitio.Locacion));
+            await Navigation.PushAsync(new Mapa(await App.db.SelectById(id)));
 
         } catch(Exception ex) {
             await DisplayAlert("Error", ex.Message, "Aceptar");
